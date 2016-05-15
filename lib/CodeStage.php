@@ -67,7 +67,7 @@ class CodeStage extends CodeRenderer {
     public function boundingBoxExactly($x, $y, $w, $h)
     {
         $this->modeBox = CodeStage::$BOX_MODE_EXACT;
-        $this->boxSize = array($x, $y, $x + w, $y + h);
+        $this->boxSize = array($x, $y, $w, $h);
         return $this;
     }
 
