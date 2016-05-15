@@ -28,20 +28,20 @@ class DebugCodeRenderer extends CodeRenderer {
     public function __construct(CodeFrame $preProcessedFrame = null, DebugRendererConfig $config = null)
     {
         parent::__construct($preProcessedFrame, $config);
-        
+
         if ($config == null) {
             $this->setConfig(new DebugRendererConfig());
         }
     }
-    
+
     //--------------------------------------------------------------------------
-    
+
     public function render()
     {
         if ($this->config == null) {
             throw new \Exception("Renderer config need to be set before rendering");
         }
-        
+
         // rendering frame with GD2 (that should be function by real impl.!!!) 
         $h = $this->frame->size;
         $w = $this->frame->size;
@@ -95,7 +95,7 @@ class DebugCodeRenderer extends CodeRenderer {
     }
 
     //--------------------------------------------------------------------------
-    
+
     private function renderLegend(&$target_image, $imgW)
     {
         $coltTxt = imagecolorallocate($target_image, 0, 0, 0); // TXT, black  
