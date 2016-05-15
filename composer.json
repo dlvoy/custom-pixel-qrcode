@@ -1,8 +1,10 @@
 {
     "name": "deltalab/custom-pixel-qrcode",
+    "type": "library",
     "description": "Custom renderer for QRCodes, using pre-rendered images as pixels",
     "homepage": "https://php.dzienia.pl/custom-pixel-qrcode",
     "license": "MIT",
+    "time": "2016-05-15",
     "keywords": ["PHPQRCode", "qrcode"],
     "authors": [
         {

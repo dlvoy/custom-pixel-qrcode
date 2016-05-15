@@ -2,9 +2,17 @@
 
 namespace DeltaLab\CustomPixelQRCode\Renderers\Debug;
 
-class DebugRendererConfig {
+use DeltaLab\CustomPixelQRCode\Renderers\RendererConfig;
+
+class DebugRendererConfig extends RendererConfig {
+
     public $outerFrame = 4;
-    public $pixelPerPoint = 6;
     public $legendSize = 150;
     public $legendVisible = true;
+
+    function __construct()
+    {
+        $this->pixelPerPoint = 6;
+    }
+
 }

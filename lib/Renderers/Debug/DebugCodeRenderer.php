@@ -2,11 +2,10 @@
 
 namespace DeltaLab\CustomPixelQRCode\Renderers\Debug;
 
-class DebugCodeRenderer {
+use DeltaLab\CustomPixelQRCode\Renderers\CodeRenderer;
 
-    private $frame = false;
-    private $frameSize = false;
-    private $config = null;
+class DebugCodeRenderer extends CodeRenderer {
+
     private $colorTarget = array();
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
     private $colorSpec = array(
@@ -25,37 +24,23 @@ class DebugCodeRenderer {
 
     //##########################################################################
 
-    public function __construct($preProcessedFrame = false, $config = false)
+    public function __construct($preProcessedFrame = false, DebugRendererConfig $config = null)
     {
-        if ($preProcessedFrame !== false) {
-            $this->setFrame($preProcessedFrame);
-        }
-        if ($config !== false) {
-            $this->setConfig($config);
-        } else {
+        parent::__construct($preProcessedFrame, $config);
+        
+        if ($config == null) {
             $this->setConfig(new DebugRendererConfig());
         }
     }
     
     //--------------------------------------------------------------------------
-
-    public function setFrame($preProcessedFrame)
-    {
-        $this->frame = $preProcessedFrame;
-        $this->frameSize = count($this->frame);
-    }
-
-    //--------------------------------------------------------------------------
-    
-    public function setConfig(DebugRendererConfig $config)
-    {
-        $this->config = $config;
-    }
-
-    //--------------------------------------------------------------------------
     
     public function render()
     {
+        if ($this->config == null) {
+            throw new Exception("Renderer config need to be set before rendering");
+        }
+        
         // rendering frame with GD2 (that should be function by real impl.!!!) 
         $h = count($this->frame);
         $w = strlen($this->frame[0]);
@@ -124,15 +109,6 @@ class DebugCodeRenderer {
             imagestring($target_image, 2, $px, $py + 1, $colName, $coltTxt);
             $pos++;
         }
-    }
-
-    //--------------------------------------------------------------------------
-    
-    public function renderToFile($outputFileName)
-    {
-        $target_image = $this->render();
-        imagepng($target_image, $outputFileName);
-        imagedestroy($target_image);
     }
 
 }
