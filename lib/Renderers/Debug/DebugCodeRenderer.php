@@ -2,6 +2,7 @@
 
 namespace DeltaLab\CustomPixelQRCode\Renderers\Debug;
 
+use DeltaLab\CustomPixelQRCode\CodeFrame;
 use DeltaLab\CustomPixelQRCode\Renderers\CodeRenderer;
 
 class DebugCodeRenderer extends CodeRenderer {
@@ -24,7 +25,7 @@ class DebugCodeRenderer extends CodeRenderer {
 
     //##########################################################################
 
-    public function __construct($preProcessedFrame = false, DebugRendererConfig $config = null)
+    public function __construct(CodeFrame $preProcessedFrame = null, DebugRendererConfig $config = null)
     {
         parent::__construct($preProcessedFrame, $config);
         
@@ -38,12 +39,12 @@ class DebugCodeRenderer extends CodeRenderer {
     public function render()
     {
         if ($this->config == null) {
-            throw new Exception("Renderer config need to be set before rendering");
+            throw new \Exception("Renderer config need to be set before rendering");
         }
         
         // rendering frame with GD2 (that should be function by real impl.!!!) 
-        $h = count($this->frame);
-        $w = strlen($this->frame[0]);
+        $h = $this->frame->size;
+        $w = $this->frame->size;
 
         $imgW = $w + 2 * $this->config->outerFrame;
         $imgH = $h + 2 * $this->config->outerFrame;
@@ -63,7 +64,7 @@ class DebugCodeRenderer extends CodeRenderer {
         for ($y = 0; $y < $h; $y++) {
             for ($x = 0; $x < $w; $x++) {
                 imagesetpixel(
-                        $base_image, $x + $this->config->outerFrame, $y + $this->config->outerFrame, $colorBase[$this->frame[$y][$x]]
+                        $base_image, $x + $this->config->outerFrame, $y + $this->config->outerFrame, $colorBase[$this->frame->pixels[$y][$x]]
                 );
             }
         }
