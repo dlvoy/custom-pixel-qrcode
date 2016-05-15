@@ -47,8 +47,6 @@ class CodePreprocessor {
 
     private function buildExtendedFrame()
     {
-        assert($this->rawFrame !== false, "Raw frame need to initialised first");
-
         $this->size = $this->rawSize + 2;
         $this->buildFrameFromRawFrame();
         $this->mapRawPixelsAndGatherSubMarkers();
