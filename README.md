@@ -24,6 +24,6 @@ It is also hosted for sneek preview at http://php.dzienia.pl/custom-pixel-qrcode
 Aknowledgements
 ---------------
 
-Orginal library development bz Dominik Dzienia, author of PHPQRCode liblary.
+Orginal library development by Dominik Dzienia, author of PHPQRCode library.
 
 Development sponsored by community donations.
