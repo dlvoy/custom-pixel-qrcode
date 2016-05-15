@@ -24,6 +24,8 @@ class ImageRendererConfig extends RendererConfig {
         $this->loadThemeImages();
     }
 
+    //--------------------------------------------------------------------------
+
     function __destruct()
     {
         $this->dispose();

@@ -9,6 +9,8 @@ abstract class CodeRenderer {
 
     protected $frame = false;
     protected $config = null;
+    
+    public $rendered = null;
 
     //##########################################################################
 
@@ -26,6 +28,23 @@ abstract class CodeRenderer {
         }
     }
 
+    //--------------------------------------------------------------------------
+    
+    function __destruct()
+    {
+        $this->dispose();
+    }
+
+    //--------------------------------------------------------------------------
+
+    public function dispose()
+    {
+        if (isset($this->rendered) && ($this->rendered != null)) {
+            imagedestroy($this->rendered);
+            $this->rendered = null;
+        }
+    }
+    
     //--------------------------------------------------------------------------
 
     public function setFrame(CodeFrame $preProcessedFrame)
@@ -47,6 +66,23 @@ abstract class CodeRenderer {
         $image = $this->render();
         imagepng($image, $outputFileName);
         imagedestroy($image);
+    }
+    
+    //--------------------------------------------------------------------------
+
+    public function renderInMemory()
+    {
+        $this->dispose();
+        $this->rendered = $this->render();
+    }
+    
+    //--------------------------------------------------------------------------
+
+    public function renderIfNeeded()
+    {
+        if ($this->rendered == null) {
+            $this->renderInMemory();
+        }
     }
 
 }
