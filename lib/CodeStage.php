@@ -28,8 +28,8 @@ class CodeStage extends CodeRenderer {
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
     private $renderer = null;
     private $backgroundImage = null;
-    private $backgroundSize = array(0, 0);
-    private $codeSize = array(0, 0);
+    private $backgroundDim = array(0, 0);
+    private $codeDim = 0;
 
     //##########################################################################
 
@@ -59,6 +59,26 @@ class CodeStage extends CodeRenderer {
 
     public function background($backgroundFile)
     {
+        $bgInfo = getimagesize($backgroundFile);
+        $image = null;
+
+        switch ($bgInfo[2]) {
+            case IMAGETYPE_JPEG:
+                $image = imagecreatefromjpeg($backgroundFile);
+                break;
+            case IMAGETYPE_PNG:
+                $image = imagecreatefrompng($backgroundFile);
+                break;
+            default:
+                throw new Exception("Unknown file type of file: " . $backgroundFile);
+        }
+
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
+
+        $this->backgroundDim = array($bgInfo[0], $bgInfo[1]);
+        $this->backgroundImage = $image;
+
         return $this;
     }
 
@@ -109,9 +129,9 @@ class CodeStage extends CodeRenderer {
 
     //--------------------------------------------------------------------------
 
-    public function codeSizeExact($w, $h)
+    public function codeSizeExact($size)
     {
-        $this->codeSize = array($w, $h);
+        $this->codeDim = $size;
         $this->modeFit = CodeStage::$FIT_MODE_FIXED;
         return $this;
     }
@@ -136,8 +156,7 @@ class CodeStage extends CodeRenderer {
 
     public function codeSizePixel($multiplier)
     {
-        $scaledSize = $this->renderer->frame->size * $multiplier;
-        $this->codeSize = array($scaledSize, $scaledSize);
+        $this->codeDim = $this->renderer->frame->size * $multiplier;
         $this->modeFit = CodeStage::$FIT_MODE_FIXED;
         return $this;
     }
