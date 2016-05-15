@@ -1,4 +1,4 @@
-Transparent Rounded Pixel Set
+Circle Pixel Set
 -----------------------
 
-Pixels are rounded rectangles
+Pixels are small circles

@@ -1,2 +1,2 @@
 vendor/
-demo/output/
+demo/output/*.png
