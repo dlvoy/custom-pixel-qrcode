@@ -11,10 +11,12 @@ Dependencies
 Library uses internally PHPQRCode library (http://phpqrcode.sourceforge.net/) 
 and uses Composer for autoloading (https://getcomposer.org/)
 
-Demo
-----
+Setup and Demo
+--------------
 
-Please take a look into *demo* sub directory.
+To configure autoloader, please call in root project directory: composer install 
+
+For examples take a look into *demo* sub directory.
 
 It is also hosted for sneek preview at http://php.dzienia.pl/custom-pixel-qrcode 
 *(may be not up-to-date with current master)*.
