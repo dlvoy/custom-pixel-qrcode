@@ -2,22 +2,12 @@
 
     namespace DeltaLab\CustomPixelQRCode;
 
+    use DeltaLab\CustomPixelQRCode\Choreography;
     use DeltaLab\CustomPixelQRCode\Renderers\CodeRenderer;
     use DeltaLab\CustomPixelQRCode\Renderers\Image\ImageCodeRenderer;
 
     class CodeChoreographer extends CodeRenderer {
 
-        //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $ALIGN_START = 0;
-        public static $ALIGN_MIDDLE = 1;
-        public static $ALIGN_END = 2;
-        //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $BOX_MODE_EXACT = 0;
-        public static $BOX_MODE_MARGIN = 1;
-        //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $FIT_MODE_FIXED = 0;
-        public static $FIT_MODE_RESAMPLED = 1;
-        public static $FIT_MODE_INEXACT = 2;
         //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
         public $modeFit;
         public $modeBox;
@@ -44,7 +34,7 @@
         {
             parent::__construct(null, null);
             $this->renderer = $renderer;
-            $this->align(CodeChoreographer::$ALIGN_MIDDLE, CodeChoreographer::$ALIGN_MIDDLE);
+            $this->align(Choreography::$AlignMiddle, Choreography::$AlignMiddle);
             $this->codeSizeFit();
             $this->boundingBoxPadding();
         }
@@ -108,7 +98,7 @@
          */
         public function boundingBoxExactly($x, $y, $w, $h)
         {
-            $this->modeBox = CodeChoreographer::$BOX_MODE_EXACT;
+            $this->modeBox = Choreography::$BoxModeExact;
             $this->boxSize = array($x, $y, $w, $h);
             return $this;
         }
@@ -125,7 +115,7 @@
          */
         public function boundingBoxPadding($top = false, $right = false, $bottom = false, $left = false)
         {
-            $this->modeBox = CodeChoreographer::$BOX_MODE_MARGIN;
+            $this->modeBox = Choreography::$BoxModeMargin;
             if ($top === false) {
                 $top = 0;
             }
@@ -146,9 +136,9 @@
         /**
          * Specifies code alignment in bounding box
          * It can take one of values:
-         * - CodeChoreographer::$ALIGN_START - left or top alignment
-         * - CodeChoreographer::$ALIGN_MIDDLE - center alignment
-         * - CodeChoreographer::$ALIGN_START - right or bottom alignment
+         * - Choreography::$AlignStart - left or top alignment
+         * - Choreography::$AlignMiddle - center alignment
+         * - Choreography::$AlignEnd - right or bottom alignment
          * @param enum $horizontal horizontal aligment
          * @param enum $vertical vertical aligment
          * @return \DeltaLab\CustomPixelQRCode\CodeChoreographer itself, for method chaining
@@ -156,10 +146,10 @@
         public function align($horizontal = false, $vertical = false)
         {
             if ($horizontal === false) {
-                $horizontal = CodeChoreographer::$ALIGN_MIDDLE;
+                $horizontal = Choreography::$AlignMiddle;
             }
             if ($vertical === false) {
-                $vertical = CodeChoreographer::$ALIGN_MIDDLE;
+                $vertical = Choreography::$AlignMiddle;
             }
             $this->alignH = $horizontal;
             $this->alignV = $vertical;
@@ -176,7 +166,7 @@
         public function codeSizeExact($size)
         {
             $this->codeDim = $size;
-            $this->modeFit = CodeChoreographer::$FIT_MODE_FIXED;
+            $this->modeFit = Choreography::$FitModeFixed;
             return $this;
         }
 
@@ -189,7 +179,7 @@
          */
         public function codeSizeFit()
         {
-            $this->modeFit = CodeChoreographer::$FIT_MODE_RESAMPLED;
+            $this->modeFit = Choreography::$FitModeResampled;
             return $this;
         }
 
@@ -206,7 +196,7 @@
          */
         public function codeSizeSharp()
         {
-            $this->modeFit = CodeChoreographer::$FIT_MODE_INEXACT;
+            $this->modeFit = Choreography::$FitModeInexact;
             return $this;
         }
 
@@ -222,7 +212,7 @@
         public function codeSizePixel($multiplier)
         {
             $this->codeDim = $this->renderer->getDim() * $multiplier;
-            $this->modeFit = CodeChoreographer::$FIT_MODE_FIXED;
+            $this->modeFit = Choreography::$FitModeFixed;
             return $this;
         }
 
@@ -263,7 +253,7 @@
             if ($this->boxSize === false) {
                 $this->boxSize = array(0, 0, $this->backgroundDim[0], $this->backgroundDim[1]);
             }
-            if ($this->modeBox == CodeChoreographer::$BOX_MODE_MARGIN) {
+            if ($this->modeBox == Choreography::$BoxModeMargin) {
                 $this->boxSize[0] += $this->boxMargin[0];
                 $this->boxSize[1] += $this->boxMargin[1];
                 $this->boxSize[2] -= ($this->boxMargin[0] + $this->boxMargin[2]);
@@ -277,11 +267,11 @@
         {
             $this->codeOrigDim = $this->renderer->getDim();
             switch ($this->modeFit) {
-                case CodeChoreographer::$FIT_MODE_RESAMPLED: {
+                case Choreography::$FitModeResampled: {
                         $this->codeDim = min($this->boxSize[2], $this->boxSize[3]);
                     } break;
 
-                case CodeChoreographer::$FIT_MODE_INEXACT: {
+                case Choreography::$FitModeInexact: {
                         $this->calculateInexactFit();
                     } break;
             }

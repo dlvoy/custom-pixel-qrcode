@@ -8,6 +8,11 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+    checks:
+      CleanCode/BooleanArgumentFlag:
+        enabled: false
+    exclude_fingerprints:
+    - 013c36c8b0ebd9346a9ab27dd6bc549d
 ratings:
   paths:
   - "**.inc"

@@ -3,6 +3,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use DeltaLab\CustomPixelQRCode\CodeFrame;
 use DeltaLab\CustomPixelQRCode\CodeChoreographer;
+use DeltaLab\CustomPixelQRCode\Choreography;
 use DeltaLab\CustomPixelQRCode\Renderers\Image\ImageCodeRenderer;
 use DeltaLab\CustomPixelQRCode\Renderers\Image\ImageRendererConfig;
 
@@ -31,7 +32,7 @@ $choreograpgerB
         ->background(__DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'girl-and-blank-paper.jpg')
         ->boundingBoxExactly(480, 180, 290, 290)
         ->codeSizeFit()
-        ->align(CodeChoreographer::$ALIGN_MIDDLE, CodeChoreographer::$ALIGN_MIDDLE)
+        ->align(Choreography::$AlignMiddle, Choreography::$AlignMiddle)
         ->renderToFile(EXAMPLE_TMP_SERVERPATH . 'demo_B.png');
 $imageRendererB->dispose();
 $imageRendererB->dispose();

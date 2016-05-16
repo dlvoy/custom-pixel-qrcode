@@ -43,28 +43,28 @@ class DebugCodeRenderer extends CodeRenderer {
         }
 
         // rendering frame with GD2 (that should be function by real impl.!!!) 
-        $h = $this->frame->size;
-        $w = $this->frame->size;
+        $logicalH = $this->frame->size;
+        $logicalW = $this->frame->size;
 
-        $imgW = $w + 2 * $this->config->outerFrame;
-        $imgH = $h + 2 * $this->config->outerFrame;
+        $imgW = $logicalW + 2 * $this->config->outerFrame;
+        $imgH = $logicalH + 2 * $this->config->outerFrame;
 
-        $base_image = imagecreate($imgW, $imgH);
+        $baseImage = imagecreate($imgW, $imgH);
 
-        $colBg = imagecolorallocate($base_image, 255, 255, 255); // BG, white  
+        $colBg = imagecolorallocate($baseImage, 255, 255, 255); // BG, white  
 
         foreach ($this->colorSpec as $colorKey => $colorDef) {
             $colorBase[$colorKey] = imagecolorallocate(
-                    $base_image, $colorDef[0], $colorDef[1], $colorDef[2]
+                    $baseImage, $colorDef[0], $colorDef[1], $colorDef[2]
             );
         }
 
-        imagefill($base_image, 0, 0, $colBg);
+        imagefill($baseImage, 0, 0, $colBg);
 
-        for ($y = 0; $y < $h; $y++) {
-            for ($x = 0; $x < $w; $x++) {
+        for ($y = 0; $y < $logicalH; $y++) {
+            for ($x = 0; $x < $logicalW; $x++) {
                 imagesetpixel(
-                        $base_image, $x + $this->config->outerFrame, $y + $this->config->outerFrame, $colorBase[$this->frame->pixels[$y][$x]]
+                        $baseImage, $x + $this->config->outerFrame, $y + $this->config->outerFrame, $colorBase[$this->frame->pixels[$y][$x]]
                 );
             }
         }
@@ -72,42 +72,42 @@ class DebugCodeRenderer extends CodeRenderer {
         $legendSize = $this->config->legendVisible ? $this->config->legendSize : 0;
 
         // creating zoomed version 
-        $target_image = imagecreate(
+        $targetImage = imagecreate(
                 $imgW * $this->config->pixelPerPoint + $legendSize, max($imgH * $this->config->pixelPerPoint, 250)
         );
 
-        imagecolorallocate($target_image, 255, 255, 255); // BG, white  
+        imagecolorallocate($targetImage, 255, 255, 255); // BG, white  
 
         foreach ($this->colorSpec as $colorKey => $colorDef) {
             $this->colorTarget[$colorKey] = imagecolorallocate(
-                    $target_image, $colorDef[0], $colorDef[1], $colorDef[2]
+                    $targetImage, $colorDef[0], $colorDef[1], $colorDef[2]
             );
         }
         imagecopyresized(
-                $target_image, $base_image, 0, 0, 0, 0, $imgW * $this->config->pixelPerPoint, $imgH * $this->config->pixelPerPoint, $imgW, $imgH);
-        imagedestroy($base_image);
+                $targetImage, $baseImage, 0, 0, 0, 0, $imgW * $this->config->pixelPerPoint, $imgH * $this->config->pixelPerPoint, $imgW, $imgH);
+        imagedestroy($baseImage);
 
         if ($this->config->legendVisible) {
-            $this->renderLegend($target_image, $imgW);
+            $this->renderLegend($targetImage, $imgW);
         }
 
-        return $target_image;
+        return $targetImage;
     }
 
     //--------------------------------------------------------------------------
 
-    private function renderLegend(&$target_image, $imgW)
+    private function renderLegend(&$targetImage, $imgW)
     {
-        $coltTxt = imagecolorallocate($target_image, 0, 0, 0); // TXT, black  
+        $coltTxt = imagecolorallocate($targetImage, 0, 0, 0); // TXT, black  
         $pos = 0;
         foreach ($this->colorLegend as $colKey => $colName) {
             $px = $imgW * $this->config->pixelPerPoint + 25;
             $py = $this->config->outerFrame * $this->config->pixelPerPoint + $pos * 16;
             imagefilledrectangle(
-                    $target_image, $px - 20, $py + 3, $px - 10, $py + 13, $this->colorTarget[$colKey]
+                    $targetImage, $px - 20, $py + 3, $px - 10, $py + 13, $this->colorTarget[$colKey]
             );
-            imagerectangle($target_image, $px - 20, $py + 3, $px - 10, $py + 13, $coltTxt);
-            imagestring($target_image, 2, $px, $py + 1, $colName, $coltTxt);
+            imagerectangle($targetImage, $px - 20, $py + 3, $px - 10, $py + 13, $coltTxt);
+            imagestring($targetImage, 2, $px, $py + 1, $colName, $coltTxt);
             $pos++;
         }
     }

@@ -45,11 +45,11 @@ class ImageCodeRenderer extends CodeRenderer {
             for ($x = 0; $x < $this->frame->size; $x++) {
                 $themeElement = false;
                 switch ($this->frame->pixels[$y][$x]) {
-                    case CodeFrame::$SYMBOL_BORDER : $themeElement = 'pixel_border';
+                    case CodeFrame::$SymbolBorder : $themeElement = 'pixel_border';
                         break;
-                    case CodeFrame::$SYMBOL_PIXEL_ON : $themeElement = 'pixel_on';
+                    case CodeFrame::$SymbolPixelOn : $themeElement = 'pixel_on';
                         break;
-                    case CodeFrame::$SYMBOL_PIXEL_OFF : $themeElement = 'pixel_off';
+                    case CodeFrame::$SymbolPixelOff : $themeElement = 'pixel_off';
                         break;
                     default:
                         break;
