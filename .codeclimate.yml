@@ -13,6 +13,12 @@ engines:
         enabled: false
     exclude_fingerprints:
     - 013c36c8b0ebd9346a9ab27dd6bc549d
+    # false positive: unused private fields such as '$themeContents'
+    - a3798ce0a56f4c1c0b4b58b1b5ac992a
+    # false positive: unused private fields such as 'themeFiles'
+    - 75756ec6c381f8cfc4d7e7d2a1cda28e
+    # CodeChoreographer has 11 public methods. 
+    - 5bb1017a45fe6176f613cb3ad147f7e1
 ratings:
   paths:
   - "**.inc"

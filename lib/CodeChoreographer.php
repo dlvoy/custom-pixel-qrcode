@@ -332,12 +332,14 @@
                 $this->globalOffset[1] = abs($this->codeOffset[1]);
             }
 
-            if (($this->codeOffset[0] + $this->codeDim) > $this->backgroundDim[0]) {
-                $this->globalOffset[2] = ($this->codeOffset[0] + $this->codeDim) - $this->backgroundDim[0];
-            }
-
-            if (($this->codeOffset[1] + $this->codeDim) > $this->backgroundDim[1]) {
-                $this->globalOffset[3] = ($this->codeOffset[1] + $this->codeDim) - $this->backgroundDim[1];
+            $this->fixOverflowSize(0);
+            $this->fixOverflowSize(1);
+        }
+        
+        private function fixOverflowSize($pos)
+        {
+            if (($this->codeOffset[0+$pos] + $this->codeDim) > $this->backgroundDim[0+$pos]) {
+                $this->globalOffset[2+$pos] = ($this->codeOffset[0+$pos] + $this->codeDim) - $this->backgroundDim[0+$pos];
             }
         }
 
