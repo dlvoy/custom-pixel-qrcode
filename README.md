@@ -1,5 +1,7 @@
 Custom Pixel QRCode
 ===================
+[![Code Climate](https://codeclimate.com/github/dlvoy/custom-pixel-qrcode/badges/gpa.svg)](https://codeclimate.com/github/dlvoy/custom-pixel-qrcode)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 This library helps with rendering QRCode images 
 using pre defined and pre rendered custom images for pixels, border and markers, 

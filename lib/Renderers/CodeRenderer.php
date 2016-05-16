@@ -40,8 +40,10 @@ abstract class CodeRenderer {
     public function dispose()
     {
         if (isset($this->rendered) && ($this->rendered != null)) {
-            imagedestroy($this->rendered);
-            $this->rendered = null;
+            if(is_resource($this->rendered)) { 
+                imagedestroy($this->rendered);
+                $this->rendered = null;
+            }
         }
     }
     
@@ -59,6 +61,45 @@ abstract class CodeRenderer {
         $this->config = $config;
     }
 
+    //--------------------------------------------------------------------------
+    /**
+     * Get render size, in pixels
+     * @return int image size
+     */
+    public function getDim()
+    {
+        if (isset($this->config->pixelPerPoint)) {
+            return $this->frame->size * $this->config->pixelPerPoint;
+        } else {
+            return $this->frame->size;
+        }        
+    }
+    
+    //--------------------------------------------------------------------------
+    /**
+     * Get code size, in logical pixels
+     * @return int logical code size
+     */
+    public function getSize()
+    {
+        return $this->frame->size;
+    }
+    
+    //--------------------------------------------------------------------------
+    /**
+     * Get single logical pixel size.
+     * It shows scale factor - size of image representing single logical pixel.
+     * @return int pixel size
+     */
+    public function getPixelSize()
+    {
+        if (isset($this->config->pixelPerPoint)) {
+            return $this->config->pixelPerPoint;
+        } else {
+            return 1;
+        }        
+    }
+    
     //--------------------------------------------------------------------------
 
     public function renderToFile($outputFileName)
