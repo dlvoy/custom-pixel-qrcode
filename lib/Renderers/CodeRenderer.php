@@ -70,9 +70,9 @@ abstract class CodeRenderer {
     {
         if (isset($this->config->pixelPerPoint)) {
             return $this->frame->size * $this->config->pixelPerPoint;
-        } else {
-            return $this->frame->size;
-        }        
+        }
+        
+        return $this->frame->size;        
     }
     
     //--------------------------------------------------------------------------
@@ -95,9 +95,9 @@ abstract class CodeRenderer {
     {
         if (isset($this->config->pixelPerPoint)) {
             return $this->config->pixelPerPoint;
-        } else {
-            return 1;
-        }        
+        } 
+        
+        return 1;       
     }
     
     //--------------------------------------------------------------------------

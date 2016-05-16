@@ -32,7 +32,7 @@ $choreograpgerB
         ->background(__DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'girl-and-blank-paper.jpg')
         ->boundingBoxExactly(480, 180, 290, 290)
         ->codeSizeFit()
-        ->align(Choreography::$AlignMiddle, Choreography::$AlignMiddle)
+        ->align(Choreography::$alignMiddle, Choreography::$alignMiddle)
         ->renderToFile(EXAMPLE_TMP_SERVERPATH . 'demo_B.png');
 $imageRendererB->dispose();
 $imageRendererB->dispose();

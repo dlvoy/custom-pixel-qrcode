@@ -34,7 +34,7 @@
         {
             parent::__construct(null, null);
             $this->renderer = $renderer;
-            $this->align(Choreography::$AlignMiddle, Choreography::$AlignMiddle);
+            $this->align(Choreography::$alignMiddle, Choreography::$alignMiddle);
             $this->codeSizeFit();
             $this->boundingBoxPadding();
         }
@@ -90,16 +90,16 @@
         //--------------------------------------------------------------------------
         /**
          * Specifies exact box within which code will be fit.
-         * @param int $x box top-left corner X coordinate
-         * @param int $y box top-left corner Y coordinate
-         * @param int $w box width
-         * @param int $h box height
+         * @param int $posX box top-left corner X coordinate
+         * @param int $posY box top-left corner Y coordinate
+         * @param int $width box width
+         * @param int $height box height
          * @return \DeltaLab\CustomPixelQRCode\CodeChoreographer itself, for method chaining
          */
-        public function boundingBoxExactly($x, $y, $w, $h)
+        public function boundingBoxExactly($posX, $posY, $width, $height)
         {
-            $this->modeBox = Choreography::$BoxModeExact;
-            $this->boxSize = array($x, $y, $w, $h);
+            $this->modeBox = Choreography::$boxModeExact;
+            $this->boxSize = array($posX, $posY, $width, $height);
             return $this;
         }
 
@@ -115,7 +115,7 @@
          */
         public function boundingBoxPadding($top = false, $right = false, $bottom = false, $left = false)
         {
-            $this->modeBox = Choreography::$BoxModeMargin;
+            $this->modeBox = Choreography::$boxModeMargin;
             if ($top === false) {
                 $top = 0;
             }
@@ -146,10 +146,10 @@
         public function align($horizontal = false, $vertical = false)
         {
             if ($horizontal === false) {
-                $horizontal = Choreography::$AlignMiddle;
+                $horizontal = Choreography::$alignMiddle;
             }
             if ($vertical === false) {
-                $vertical = Choreography::$AlignMiddle;
+                $vertical = Choreography::$alignMiddle;
             }
             $this->alignH = $horizontal;
             $this->alignV = $vertical;
@@ -166,7 +166,7 @@
         public function codeSizeExact($size)
         {
             $this->codeDim = $size;
-            $this->modeFit = Choreography::$FitModeFixed;
+            $this->modeFit = Choreography::$fitModeFixed;
             return $this;
         }
 
@@ -179,7 +179,7 @@
          */
         public function codeSizeFit()
         {
-            $this->modeFit = Choreography::$FitModeResampled;
+            $this->modeFit = Choreography::$fitModeResampled;
             return $this;
         }
 
@@ -196,7 +196,7 @@
          */
         public function codeSizeSharp()
         {
-            $this->modeFit = Choreography::$FitModeInexact;
+            $this->modeFit = Choreography::$fitModeInexact;
             return $this;
         }
 
@@ -212,7 +212,7 @@
         public function codeSizePixel($multiplier)
         {
             $this->codeDim = $this->renderer->getDim() * $multiplier;
-            $this->modeFit = Choreography::$FitModeFixed;
+            $this->modeFit = Choreography::$fitModeFixed;
             return $this;
         }
 
@@ -253,7 +253,7 @@
             if ($this->boxSize === false) {
                 $this->boxSize = array(0, 0, $this->backgroundDim[0], $this->backgroundDim[1]);
             }
-            if ($this->modeBox == Choreography::$BoxModeMargin) {
+            if ($this->modeBox == Choreography::$boxModeMargin) {
                 $this->boxSize[0] += $this->boxMargin[0];
                 $this->boxSize[1] += $this->boxMargin[1];
                 $this->boxSize[2] -= ($this->boxMargin[0] + $this->boxMargin[2]);
@@ -267,11 +267,11 @@
         {
             $this->codeOrigDim = $this->renderer->getDim();
             switch ($this->modeFit) {
-                case Choreography::$FitModeResampled: {
+                case Choreography::$fitModeResampled: {
                         $this->codeDim = min($this->boxSize[2], $this->boxSize[3]);
                     } break;
 
-                case Choreography::$FitModeInexact: {
+                case Choreography::$fitModeInexact: {
                         $this->calculateInexactFit();
                     } break;
             }
@@ -294,11 +294,11 @@
             do {
                 $renderSize = $codeSize * $detectedPixelSize;
                 if ($renderSize <= $maxRenderSize) {
-                    if ($detectedPixelSize <= $codePixelSize) {
-                        $div = $codePixelSize / $detectedPixelSize;
-                    } else {
-                        $div = $detectedPixelSize / $codePixelSize;
-                    }
+           
+                    $div = ($detectedPixelSize <= $codePixelSize) 
+                            ? ($codePixelSize / $detectedPixelSize) 
+                            : ($detectedPixelSize / $codePixelSize);
+                    
                     if (floor($div) == $div) {
                         $bestPixelSize = $detectedPixelSize;
                     }

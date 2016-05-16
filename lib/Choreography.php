@@ -5,16 +5,16 @@
     class Choreography {
 
          //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $AlignStart = 0;
-        public static $AlignMiddle = 1;
-        public static $AlignEnd = 2;
+        public static $alignStart = 0;
+        public static $alignMiddle = 1;
+        public static $alignEnd = 2;
         //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $BoxModeExact = 0;
-        public static $BoxModeMargin = 1;
+        public static $boxModeExact = 0;
+        public static $boxModeMargin = 1;
         //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $FitModeFixed = 0;
-        public static $FitModeResampled = 1;
-        public static $FitModeInexact = 2;
+        public static $fitModeFixed = 0;
+        public static $fitModeResampled = 1;
+        public static $fitModeInexact = 2;
 
     }
     

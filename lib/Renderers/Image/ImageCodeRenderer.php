@@ -31,8 +31,8 @@ class ImageCodeRenderer extends CodeRenderer {
         imagefilledrectangle($image, 0, 0, $imgW, $imgH, $color);
 
         $this->renderPixels($image);
-        $this->renderSpecialElement($image, $this->frame->markers, 'marker_main', 9);
-        $this->renderSpecialElement($image, $this->frame->subMarkers, 'marker_sub', 5);
+        $this->renderSpecialElement($image, $this->frame->markers, 'markerMain', 9);
+        $this->renderSpecialElement($image, $this->frame->subMarkers, 'markerSub', 5);
 
         return $image;
     }
@@ -45,11 +45,11 @@ class ImageCodeRenderer extends CodeRenderer {
             for ($x = 0; $x < $this->frame->size; $x++) {
                 $themeElement = false;
                 switch ($this->frame->pixels[$y][$x]) {
-                    case CodeFrame::$SymbolBorder : $themeElement = 'pixel_border';
+                    case CodeFrame::$symbolBorder : $themeElement = 'pixelBorder';
                         break;
-                    case CodeFrame::$SymbolPixelOn : $themeElement = 'pixel_on';
+                    case CodeFrame::$symbolPixelOn : $themeElement = 'pixelOn';
                         break;
-                    case CodeFrame::$SymbolPixelOff : $themeElement = 'pixel_off';
+                    case CodeFrame::$symbolPixelOff : $themeElement = 'pixelOff';
                         break;
                     default:
                         break;

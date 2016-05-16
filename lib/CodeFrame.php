@@ -12,11 +12,11 @@
         private $rawFrame = false;
         private $rawSize = false;
         //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-        public static $SymbolEmpty = "\x00";
-        public static $SymbolBorder = "\x01";
-        public static $SymbolSubMarker = "\xa1";
-        public static $SymbolPixelOff = "\x02";
-        public static $SymbolPixelOn = "\x03";
+        public static $symbolEmpty = "\x00";
+        public static $symbolBorder = "\x01";
+        public static $symbolSubMarker = "\xa1";
+        public static $symbolPixelOff = "\x02";
+        public static $symbolPixelOn = "\x03";
 
         //--------------------------------------------------------------------------
 
@@ -49,11 +49,11 @@
 
         private function buildFrameFromRawFrame()
         {
-            $this->pixels = array(str_repeat(CodeFrame::$SymbolBorder, $this->size));
+            $this->pixels = array(str_repeat(CodeFrame::$symbolBorder, $this->size));
             for ($y = 0; $y < $this->rawSize; $y++) {
-                $this->pixels[] = CodeFrame::$SymbolBorder.$this->rawFrame[$y].CodeFrame::$SymbolBorder;
+                $this->pixels[] = CodeFrame::$symbolBorder.$this->rawFrame[$y].CodeFrame::$symbolBorder;
             }
-            $this->pixels[] = str_repeat(CodeFrame::$SymbolBorder, $this->size);
+            $this->pixels[] = str_repeat(CodeFrame::$symbolBorder, $this->size);
         }
 
         //--------------------------------------------------------------------------
@@ -67,14 +67,14 @@
             for ($y = 0; $y < $this->size; $y++) {
                 for ($x = 0; $x < $this->size; $x++) {
 
-                    if ($this->pixels[$y][$x] == CodeFrame::$SymbolSubMarker) {
+                    if ($this->pixels[$y][$x] == CodeFrame::$symbolSubMarker) {
                         $this->subMarkers[] = array($x, $y);
                         $this->wipeSquare($x, $y, 5);
                     }
 
                     $pixelValue = ord($this->pixels[$y][$x]);
                     if ($pixelValue > 1) {
-                        $this->pixels[$y][$x] = ($pixelValue % 2 == 0) ? CodeFrame::$SymbolPixelOff : CodeFrame::$SymbolPixelOn;
+                        $this->pixels[$y][$x] = ($pixelValue % 2 == 0) ? CodeFrame::$symbolPixelOff : CodeFrame::$symbolPixelOn;
                     }
                 }
             }
@@ -100,7 +100,7 @@
         {
             for ($y = $fromY; $y < $fromY + $size; $y++) {
                 for ($x = $fromX; $x < $fromX + $size; $x++) {
-                    $this->pixels[$y][$x] = CodeFrame::$SymbolEmpty;
+                    $this->pixels[$y][$x] = CodeFrame::$symbolEmpty;
                 }
             }
         }

@@ -6,12 +6,14 @@ use DeltaLab\CustomPixelQRCode\Renderers\RendererConfig;
 
 class ImageRendererConfig extends RendererConfig {
 
-    private static $ThemeContents = array('marker_main' => 9, 'marker_sub' => 5, 'pixel_on' => 1, 'pixel_off' => 1, 'pixel_border' => 1);
+    private static $themeContents = array('markerMain' => 9, 'markerSub' => 5, 'pixelOn' => 1, 'pixelOff' => 1, 'pixelBorder' => 1);
+    private static $themeFiles = array('markerMain' => 'marker_main', 'markerSub' => 'marker_sub', 'pixelOn' => 'pixel_on', 'pixelOff' => 'pixel_off', 'pixelBorder' => 'pixel_border');
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
     public $markerMain = null;
     public $markerSub = null;
     public $pixelOn = null;
     public $pixelOff = null;
+    public $pixelBorder = null;
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
     protected $themeDir;
 
@@ -35,7 +37,7 @@ class ImageRendererConfig extends RendererConfig {
 
     public function dispose()
     {
-        foreach (array_keys(ImageRendererConfig::$ThemeContents) as $themeElement) {
+        foreach (array_keys(ImageRendererConfig::$themeContents) as $themeElement) {
             if (isset($this->$themeElement) && ($this->$themeElement != null)) {
                 imagedestroy($this->$themeElement);
                 $this->$themeElement = null;
@@ -47,7 +49,7 @@ class ImageRendererConfig extends RendererConfig {
 
     private function pathForThemeImage($name)
     {
-        return $this->themeDir . DIRECTORY_SEPARATOR . $name . '.png';
+        return $this->themeDir . DIRECTORY_SEPARATOR . ImageRendererConfig::$themeFiles[$name] . '.png';
     }
 
     //--------------------------------------------------------------------------
@@ -71,7 +73,7 @@ class ImageRendererConfig extends RendererConfig {
 
     private function ensureThemeFilesExists()
     {
-        foreach (array_keys(ImageRendererConfig::$ThemeContents) as $themeElement) {
+        foreach (array_keys(ImageRendererConfig::$themeContents) as $themeElement) {
             if (!file_exists($this->pathForThemeImage($themeElement))) {
                 throw new \Exception("Required theme file for " . $themeElement . " not found at " . $this->pathForThemeImage($themeElement));
             }
@@ -82,7 +84,7 @@ class ImageRendererConfig extends RendererConfig {
 
     private function detectPixelSize()
     {
-        $refInfo = getimagesize($this->pathForThemeImage('pixel_on'));
+        $refInfo = getimagesize($this->pathForThemeImage('pixelOn'));
         $this->pixelPerPoint = $refInfo[0];
     }
 
@@ -90,7 +92,7 @@ class ImageRendererConfig extends RendererConfig {
 
     private function ensureThemeImagesHaveCorrectSize()
     {
-        foreach (ImageRendererConfig::$ThemeContents as $themeElement => $pixelScale) {
+        foreach (ImageRendererConfig::$themeContents as $themeElement => $pixelScale) {
             $checkInfo = getimagesize($this->pathForThemeImage($themeElement));
             if ($checkInfo[0] != $checkInfo[1]) {
                 throw new \Exception("Theme element " . $themeElement . " should be square (theme at: " . $this->pathForThemeImage($themeElement) . ")");
@@ -106,7 +108,7 @@ class ImageRendererConfig extends RendererConfig {
 
     private function loadThemeImages()
     {
-        foreach (array_keys(ImageRendererConfig::$ThemeContents) as $themeElement) {
+        foreach (array_keys(ImageRendererConfig::$themeContents) as $themeElement) {
             $image = imagecreatefrompng($this->pathForThemeImage($themeElement));
             imagealphablending($image, false); // Overwrite alpha
             imagesavealpha($image, true);
