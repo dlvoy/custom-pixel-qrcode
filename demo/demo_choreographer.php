@@ -14,7 +14,7 @@ define('EXAMPLE_TMP_SERVERURL', 'output/');
 
 $imageRendererA = new ImageCodeRenderer(new CodeFrame("http://www.coca-cola.com"), new ImageRendererConfig('small-circle-24'));
 $choreograpgerA = new CodeChoreographer($imageRendererA);
-$choreograpgerA 
+$choreograpgerA
         ->background(__DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'coca-cola-1950-scaled.png')
         ->boundingBoxPadding(120)
         ->codeSizeFit()
@@ -28,7 +28,7 @@ $choreograpgerA->dispose();
 
 $imageRendererB = new ImageCodeRenderer(new CodeFrame("http://php.dzienia.pl/custom-pixel-qrcode/demo/demo_stage.php"), new ImageRendererConfig('bordered-24'));
 $choreograpgerB = new CodeChoreographer($imageRendererB);
-$choreograpgerB 
+$choreograpgerB
         ->background(__DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'girl-and-blank-paper.jpg')
         ->boundingBoxExactly(480, 180, 290, 290)
         ->codeSizeFit()

@@ -9,7 +9,6 @@ abstract class CodeRenderer {
 
     protected $frame = false;
     protected $config = null;
-    
     public $rendered = null;
 
     //##########################################################################
@@ -29,7 +28,7 @@ abstract class CodeRenderer {
     }
 
     //--------------------------------------------------------------------------
-    
+
     function __destruct()
     {
         $this->dispose();
@@ -40,13 +39,13 @@ abstract class CodeRenderer {
     public function dispose()
     {
         if (isset($this->rendered) && ($this->rendered != null)) {
-            if(is_resource($this->rendered)) { 
+            if (is_resource($this->rendered)) {
                 imagedestroy($this->rendered);
                 $this->rendered = null;
             }
         }
     }
-    
+
     //--------------------------------------------------------------------------
 
     public function setFrame(CodeFrame $preProcessedFrame)
@@ -71,10 +70,10 @@ abstract class CodeRenderer {
         if (isset($this->config->pixelPerPoint)) {
             return $this->frame->size * $this->config->pixelPerPoint;
         }
-        
-        return $this->frame->size;        
+
+        return $this->frame->size;
     }
-    
+
     //--------------------------------------------------------------------------
     /**
      * Get code size, in logical pixels
@@ -84,7 +83,7 @@ abstract class CodeRenderer {
     {
         return $this->frame->size;
     }
-    
+
     //--------------------------------------------------------------------------
     /**
      * Get single logical pixel size.
@@ -95,11 +94,11 @@ abstract class CodeRenderer {
     {
         if (isset($this->config->pixelPerPoint)) {
             return $this->config->pixelPerPoint;
-        } 
-        
-        return 1;       
+        }
+
+        return 1;
     }
-    
+
     //--------------------------------------------------------------------------
 
     public function renderToFile($outputFileName)
@@ -108,7 +107,7 @@ abstract class CodeRenderer {
         imagepng($image, $outputFileName);
         imagedestroy($image);
     }
-    
+
     //--------------------------------------------------------------------------
 
     public function renderInMemory()
@@ -116,7 +115,7 @@ abstract class CodeRenderer {
         $this->dispose();
         $this->rendered = $this->render();
     }
-    
+
     //--------------------------------------------------------------------------
 
     public function renderIfNeeded()

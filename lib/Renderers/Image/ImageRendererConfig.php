@@ -61,9 +61,8 @@ class ImageRendererConfig extends RendererConfig {
             if (!file_exists($fromPathName)) {
                 throw new \Exception("Cannot find theme by name or dir: " . $themeDirOrThemeName);
             }
-            
+
             $this->themeDir = $fromPathName;
-            
         } else {
             $this->themeDir = $themeDirOrThemeName;
         }
