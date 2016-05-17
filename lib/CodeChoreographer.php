@@ -62,24 +62,24 @@ class CodeChoreographer extends CodeRenderer {
     public function background($backgroundFile)
     {
         if (!file_exists($backgroundFile)) {
-            throw new Exception("Background image file not found: " . $backgroundFile);
+            throw new \Exception("Background image file not found: " . $backgroundFile);
         }
-        $bgInfo = getimagesize($backgroundFile);
+        $bgInfo = \getimagesize($backgroundFile);
         $image = null;
 
         switch ($bgInfo[2]) {
             case IMAGETYPE_JPEG:
-                $image = imagecreatefromjpeg($backgroundFile);
+                $image = \imagecreatefromjpeg($backgroundFile);
                 break;
             case IMAGETYPE_PNG:
-                $image = imagecreatefrompng($backgroundFile);
+                $image = \imagecreatefrompng($backgroundFile);
                 break;
             default:
-                throw new Exception("Unknown file type of file: " . $backgroundFile);
+                throw new \Exception("Unknown file type of file: " . $backgroundFile);
         }
 
-        imagealphablending($image, false);
-        imagesavealpha($image, true);
+        \imagealphablending($image, false);
+        \imagesavealpha($image, true);
 
         $this->backgroundDim = array($bgInfo[0], $bgInfo[1]);
         $this->backgroundImage = $image;
@@ -230,18 +230,18 @@ class CodeChoreographer extends CodeRenderer {
         $newW = $this->backgroundDim[0] + $this->globalOffset[0] + $this->globalOffset[2];
         $newH = $this->backgroundDim[1] + $this->globalOffset[1] + $this->globalOffset[3];
 
-        $this->rendered = imagecreatetruecolor($newW, $newH);
-        imagealphablending($this->rendered, false);
-        imagesavealpha($this->rendered, true);
+        $this->rendered = \imagecreatetruecolor($newW, $newH);
+        \imagealphablending($this->rendered, false);
+        \imagesavealpha($this->rendered, true);
 
-        $color = imagecolorallocatealpha($this->rendered, 255, 255, 255, 127);
-        imagefilledrectangle($this->rendered, 0, 0, $newW, $newH, $color);
+        $color = \imagecolorallocatealpha($this->rendered, 255, 255, 255, 127);
+        \imagefilledrectangle($this->rendered, 0, 0, $newW, $newH, $color);
 
-        imagecopy($this->rendered, $this->backgroundImage, $this->globalOffset[0], $this->globalOffset[1], 0, 0, $this->backgroundDim[0], $this->backgroundDim[1]);
+        \imagecopy($this->rendered, $this->backgroundImage, $this->globalOffset[0], $this->globalOffset[1], 0, 0, $this->backgroundDim[0], $this->backgroundDim[1]);
 
-        imagealphablending($this->rendered, true);
-        imagecopyresampled($this->rendered, $this->renderer->rendered, $this->globalOffset[0] + $this->codeOffset[0], $this->globalOffset[1] + $this->codeOffset[1], 0, 0, $this->codeDim, $this->codeDim, $this->codeOrigDim, $this->codeOrigDim);
-        imagealphablending($this->rendered, false);
+        \imagealphablending($this->rendered, true);
+        \imagecopyresampled($this->rendered, $this->renderer->rendered, $this->globalOffset[0] + $this->codeOffset[0], $this->globalOffset[1] + $this->codeOffset[1], 0, 0, $this->codeDim, $this->codeDim, $this->codeOrigDim, $this->codeOrigDim);
+        \imagealphablending($this->rendered, false);
 
         return $this->rendered;
     }
@@ -288,7 +288,7 @@ class CodeChoreographer extends CodeRenderer {
         $maxRenderSize = min($this->boxSize[2], $this->boxSize[3]);
 
         if ($codeSize == 0) {
-            throw new Exception("Rendered code logical size cannot be 0!");
+            throw new \Exception("Rendered code logical size cannot be 0!");
         }
 
         do {

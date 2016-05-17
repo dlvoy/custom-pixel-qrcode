@@ -40,7 +40,7 @@ abstract class CodeRenderer {
     {
         if (isset($this->rendered) && ($this->rendered != null)) {
             if (is_resource($this->rendered)) {
-                imagedestroy($this->rendered);
+                \imagedestroy($this->rendered);
                 $this->rendered = null;
             }
         }
@@ -104,8 +104,8 @@ abstract class CodeRenderer {
     public function renderToFile($outputFileName)
     {
         $image = $this->render();
-        imagepng($image, $outputFileName);
-        imagedestroy($image);
+        \imagepng($image, $outputFileName);
+        \imagedestroy($image);
     }
 
     //--------------------------------------------------------------------------

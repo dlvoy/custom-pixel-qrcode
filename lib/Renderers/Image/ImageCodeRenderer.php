@@ -23,12 +23,12 @@ class ImageCodeRenderer extends CodeRenderer {
         $imgW = $this->frame->size * $this->config->pixelPerPoint;
         $imgH = $this->frame->size * $this->config->pixelPerPoint;
 
-        $image = imagecreatetruecolor($imgW, $imgH);
-        imagealphablending($image, false);
-        imagesavealpha($image, true);
+        $image = \imagecreatetruecolor($imgW, $imgH);
+        \imagealphablending($image, false);
+        \imagesavealpha($image, true);
 
-        $color = imagecolorallocatealpha($image, 255, 255, 255, 127);
-        imagefilledrectangle($image, 0, 0, $imgW, $imgH, $color);
+        $color = \imagecolorallocatealpha($image, 255, 255, 255, 127);
+        \imagefilledrectangle($image, 0, 0, $imgW, $imgH, $color);
 
         $this->renderPixels($image);
         $this->renderSpecialElement($image, $this->frame->markers, 'markerMain', 9);
@@ -57,7 +57,7 @@ class ImageCodeRenderer extends CodeRenderer {
                 if ($themeElement == false) {
                     continue;
                 }
-                imagecopy($image, $this->config->$themeElement, $x * $this->config->pixelPerPoint, $y * $this->config->pixelPerPoint, 0, 0, $this->config->pixelPerPoint, $this->config->pixelPerPoint);
+                \imagecopy($image, $this->config->$themeElement, $x * $this->config->pixelPerPoint, $y * $this->config->pixelPerPoint, 0, 0, $this->config->pixelPerPoint, $this->config->pixelPerPoint);
             }
         }
     }
@@ -67,7 +67,7 @@ class ImageCodeRenderer extends CodeRenderer {
     private function renderSpecialElement(&$image, $elements, $themeElement, $imagePointSize)
     {
         foreach ($elements as $element) {
-            imagecopy($image, $this->config->$themeElement, $element[0] * $this->config->pixelPerPoint, $element[1] * $this->config->pixelPerPoint, 0, 0, $imagePointSize * $this->config->pixelPerPoint, $imagePointSize * $this->config->pixelPerPoint);
+            \imagecopy($image, $this->config->$themeElement, $element[0] * $this->config->pixelPerPoint, $element[1] * $this->config->pixelPerPoint, 0, 0, $imagePointSize * $this->config->pixelPerPoint, $imagePointSize * $this->config->pixelPerPoint);
         }
     }
 

@@ -83,7 +83,7 @@ class ImageRendererConfig extends RendererConfig {
 
     private function detectPixelSize()
     {
-        $refInfo = getimagesize($this->pathForThemeImage('pixelOn'));
+        $refInfo = \getimagesize($this->pathForThemeImage('pixelOn'));
         $this->pixelPerPoint = $refInfo[0];
     }
 
@@ -92,7 +92,7 @@ class ImageRendererConfig extends RendererConfig {
     private function ensureThemeImagesHaveCorrectSize()
     {
         foreach (ImageRendererConfig::$themeContents as $themeElement => $pixelScale) {
-            $checkInfo = getimagesize($this->pathForThemeImage($themeElement));
+            $checkInfo = \getimagesize($this->pathForThemeImage($themeElement));
             if ($checkInfo[0] != $checkInfo[1]) {
                 throw new \Exception("Theme element " . $themeElement . " should be square (theme at: " . $this->pathForThemeImage($themeElement) . ")");
             }
@@ -108,9 +108,9 @@ class ImageRendererConfig extends RendererConfig {
     private function loadThemeImages()
     {
         foreach (array_keys(ImageRendererConfig::$themeContents) as $themeElement) {
-            $image = imagecreatefrompng($this->pathForThemeImage($themeElement));
-            imagealphablending($image, false); // Overwrite alpha
-            imagesavealpha($image, true);
+            $image = \imagecreatefrompng($this->pathForThemeImage($themeElement));
+            \imagealphablending($image, false); // Overwrite alpha
+            \imagesavealpha($image, true);
 
             $this->$themeElement = $image;
         }
