@@ -35,7 +35,7 @@ $choreograpgerB
         ->align(Choreography::$alignMiddle, Choreography::$alignMiddle)
         ->renderToFile(EXAMPLE_TMP_SERVERPATH . 'demo_B.png');
 $imageRendererB->dispose();
-$imageRendererB->dispose();
+$choreograpgerB->dispose();
 
 //------------------------------------------------------------------------------
 ?>
@@ -49,5 +49,5 @@ $imageRendererB->dispose();
 Image sources:
 <ul>
     <li>http://logos.wikia.com/wiki/File:Coca-Cola_1950.png</li>
-    <li>http://www.publicdomainpictures.net/view-image.php?image=13857&picture=girl-and-blank-paper</li>
+    <li>http://www.publicdomainpictures.net/view-image.php?image=13857&amp;picture=girl-and-blank-paper</li>
 </ul>
