@@ -9,11 +9,17 @@ class ImageRendererConfig extends RendererConfig {
     private static $themeContents = array('markerMain' => 9, 'markerSub' => 5, 'pixelOn' => 1, 'pixelOff' => 1, 'pixelBorder' => 1);
     private static $themeFiles = array('markerMain' => 'marker_main', 'markerSub' => 'marker_sub', 'pixelOn' => 'pixel_on', 'pixelOff' => 'pixel_off', 'pixelBorder' => 'pixel_border');
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    public static $borderModeHidden = 0; // border not rendered
+    public static $borderModeOwn = 1; // border speciffic pixel is used (default)
+    public static $borderModePixelated = 2; // border treaded as standard, white pixel
+    //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
     public $markerMain = null;
     public $markerSub = null;
     public $pixelOn = null;
     public $pixelOff = null;
     public $pixelBorder = null;
+    //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    public $borderMode;
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
     protected $themeDir;
 
@@ -24,6 +30,7 @@ class ImageRendererConfig extends RendererConfig {
         $this->detectPixelSize();
         $this->ensureThemeImagesHaveCorrectSize();
         $this->loadThemeImages();
+        $this->borderMode = ImageRendererConfig::$borderModeOwn;
     }
 
     //--------------------------------------------------------------------------
@@ -45,6 +52,19 @@ class ImageRendererConfig extends RendererConfig {
         }
     }
 
+    //--------------------------------------------------------------------------
+    /**
+     * Configure how code border will be rendered, available modes are:
+     * - ImageRendererConfig::$borderModeHidden - border not rendered
+     * - ImageRendererConfig::$borderModeOwn - border speciffic pixel is used (default)
+     * - ImageRendererConfig::$borderModePixelated - border treaded as standard, white pixel
+     * @param type $borderMode border rendering mode
+     */
+    public function setBorderMode($borderMode)
+    {
+        $this->borderMode = $borderMode;
+    }
+    
     //--------------------------------------------------------------------------
 
     private function pathForThemeImage($name)

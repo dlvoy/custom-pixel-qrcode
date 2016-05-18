@@ -8,7 +8,7 @@ use DeltaLab\CustomPixelQRCode\Renderers\RendererConfig;
 abstract class CodeRenderer {
 
     protected $frame = false;
-    protected $config = null;
+    public $config = null;
     public $rendered = null;
 
     //##########################################################################

@@ -41,11 +41,13 @@ class ImageCodeRenderer extends CodeRenderer {
 
     private function renderPixels(&$image)
     {
+        $borderThemeElement = $this->getBorderThemeElement();
+        
         for ($y = 0; $y < $this->frame->size; $y++) {
             for ($x = 0; $x < $this->frame->size; $x++) {
                 $themeElement = false;
                 switch ($this->frame->pixels[$y][$x]) {
-                    case CodeFrame::$symbolBorder : $themeElement = 'pixelBorder';
+                    case CodeFrame::$symbolBorder : $themeElement = $borderThemeElement;
                         break;
                     case CodeFrame::$symbolPixelOn : $themeElement = 'pixelOn';
                         break;
@@ -59,6 +61,21 @@ class ImageCodeRenderer extends CodeRenderer {
                 }
                 \imagecopy($image, $this->config->$themeElement, $x * $this->config->pixelPerPoint, $y * $this->config->pixelPerPoint, 0, 0, $this->config->pixelPerPoint, $this->config->pixelPerPoint);
             }
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    private function getBorderThemeElement()
+    {
+        switch ($this->config->borderMode) {
+            case ImageRendererConfig::$borderModeHidden:
+                return false;
+            case ImageRendererConfig::$borderModePixelated:
+                return 'pixelOff';
+            case ImageRendererConfig::$borderModeOwn:
+            default:
+                return 'pixelBorder';
         }
     }
 
